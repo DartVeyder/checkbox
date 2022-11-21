@@ -1,0 +1,15 @@
+<tr>
+    <td>Товар 1</td>
+    <td>000001</td>
+    <td>10</td>
+    <td>50</td>
+    <td>500</td>
+</tr>
+<?php
+$str = <<<EOT
+
+EOT;
+foreach($response['goods'] as $good){
+   echo $good['name'];
+}
+?>

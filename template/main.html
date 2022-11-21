@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox</title>
+    <!-- Bootstrap CSS (Cloudflare CDN) -->
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css" integrity="sha512-T584yQ/tdRR5QwOpfvDfVQUidzfgc2339Lc8uBDtcp/wYu80d7jwBgAxbyMh0a9YM9F8N3tdErpFI8iaGx6x5g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Checkbox</title>
+</head>
+
+<body>
+    <div class="container">
+            <?php 
+            if($_GET['p'] == 'control_panel'){
+                include_once("control_panel.html") ;
+            }else{
+                include_once("order_control_panel.html") ;
+            } 
+            ?>
+
+    </div>
+    <style>
+        .preloader{
+            width: 100%; 
+            height: 100vh;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            right: 0;
+            bottom: 0;
+            font-size: 50px;
+            display: none;
+            z-index: 9999999;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- jQuery (Cloudflare CDN) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Bootstrap Bundle JS (Cloudflare CDN) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src ="assets/js/main.js"></script>
+</body>
+
+</html>

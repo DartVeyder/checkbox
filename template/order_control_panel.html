@@ -1,0 +1,155 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-print"></i> Checkbox PPO</h3>
+    </div>
+    <div id="checkbox-rro-order-info-container" data-order-id="<?php echo $_GET['order_id'] ?>"
+        data-client-id="<?php echo $_GET['client_id']?>">
+        <div id="preloader">
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+        <div class="modal-window-order">
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Замовлення № <?php echo $_GET['order_id'] ?></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body ">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td>Товар</td>
+                                    <td>Артикул</td>
+                                    <td>Кількість</td>
+                                    <td>Ціна</td>
+                                    <td>Сума</td>
+                                </tr>
+                            </thead>
+                            <tbody class="order-list-goods">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Відмінити</button>
+                        <button type="button" class="btn btn-primary" id="checkbox-rro-order-info-button-create-receipt" data-dismiss="modal">Підтвердити</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <table class="table rro-checkbox-table">
+            <tbody>
+                <tr class="shift-status">
+                    <td>Статус каси:</td>
+                    <td><span class="checkbox-rro-order-status">
+
+                    </td>
+                    <td>
+                        <button id="checkbox-rro-order-info-button-refresh" class="btn btn-default btn-sm "> <i
+                                class="fas fa-sync-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr class="order-generate-receipt">
+                    <td>Згенерувати чек</td>
+                    <td>
+                        <select class="form-control" id="checkbox-rro-order-info-button-create-receipt-payment-type">
+                            <option value="CARD" selected="">Картка</option>
+                        </select>
+                    </td>
+                    <td>
+                        <!--<button id="checkbox-rro-order-info-button-create-receipt" class="btn btn-success btn-lg"><i
+                                class="fa fa-shopping-cart"></i></button>-->
+
+                        <button class="btn btn-success btn-lg pre-create-receipt" type="button" data-toggle="modal"
+                            data-target="#exampleModalLong"><i class="fa fa-shopping-cart"></i></button>
+                    </td>
+                </tr>
+                <tr class="order-receipt">
+                    <td>Чек:</td>
+                    <td class="order-message"></td>
+                    <td>
+                        <a target="_blank" href="" class="btn btn-warning btn-sm receipt-link"><i
+                                class="fa fa-print"></i></a>
+                    </td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr class="order-generate-return-receipt">
+                    <td colspan="2">Згенерувати чек повернення</td>
+                    <td>
+                        <button id="checkbox-rro-order-info-button-return-receipt" class="btn btn-danger btn-sm"> <i
+                                class="far fa-file-pdf"></i></button>
+                    </td>
+                </tr>
+                <tr class="order-return-receipt">
+                    <td>Чек повернення:</td>
+                    <td class="order-return-receipt-message"></td>
+                    <td>
+                        <a target="_blank" href="" class="btn btn-warning btn-sm return-receipt-link"><i
+                                class="fa fa-print"></i></a>
+                    </td>
+                </tr>
+                <tr class="order-receipt-send-email">
+                    <td colspan="2">Відправити Email з чеком кієнту</td>
+                    <td><input type="checkbox" id="checkbox-rro-order-info-button-create-receipt-send-email" value="1"
+                    ></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #checkbox-rro-order-info-container {
+            position: relative;
+            min-height: 100px;
+            height: 200px;
+        }
+
+        #preloader {
+            display: none;
+            background: #f0f8ff9c;
+            position: absolute;
+            width: 100%;
+            height: inherit;
+        }
+
+        #preloader i {
+            position: absolute;
+            top: calc(50% - 25px);
+            left: 50%;
+            font-size: 50px;
+        }
+
+        .rro-checkbox-table tr {
+            display: none;
+        }
+
+        .modal-window-order {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirm-order {
+            border: 1px solid black;
+            padding: 20px;
+        }
+    </style>
+</div>
