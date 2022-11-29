@@ -35,6 +35,7 @@ $(document).ready(function () {
 
     function closeShift() {
         $('.close-shift').click(function () {
+            $('#item-shift .icon').html(' <div class="spinner-border spinner-border-sm mr-1" role="status"></div></button>')
             $.ajax({
                 type: "GET",
                 dataType: "json",
@@ -45,16 +46,18 @@ $(document).ready(function () {
                 async: false,
                 success: function (data) {
                     console.log(data);
-                    htmlControlPanel(data)
+                    rroOrderInfo()
                     createShift()
-                    window.open('class/controllerAjaxCheckbox.php?action=zReport&z_report_id='+data['z_report_id'], '_blank');
+                    file_get_contents('class/controllerAjaxCheckbox.php?action=zReport&z_report_id='+data['z_report_id'])
+                   // window.open('class/controllerAjaxCheckbox.php?action=zReport&z_report_id='+data['z_report_id'], '_blank');
                 }
             });
         })
     }
 
     function createShift() {
-        $('.create-shift').click(function () {
+        $('.create-shift').click(function () { 
+            $('#item-shift .icon').html(' <div class="spinner-border spinner-border-sm mr-1" role="status"></div></button>')
             $.ajax({
                 type: "GET",
                 dataType: "json",
@@ -65,7 +68,7 @@ $(document).ready(function () {
                 async: false,
                 success: function (data) {
                     console.log(data);
-                    htmlControlPanel(data)
+                    rroOrderInfo()
                     closeShift()
                 }
             });
@@ -74,11 +77,13 @@ $(document).ready(function () {
 
     function htmlControlPanel(data) {
         if (data['status'] == 'OPENED') {
-            $('.checkbox-rro-order-status').html('<span style="color: green">' + data['status'] + '</span><br><span>' + data['date_at'] + '</span>')
-            $('#item-shift').html(' <button class="btn btn-danger close-shift"><i class="fa fa-ban fa-fw"></i>Закрити зміну</button>')
+            $status = "Зміна відкрита";
+            $('.checkbox-rro-order-status').html('<span style="color: green">' + $status + '</span><br><span>' + data['cashier_full_name'] + '</span><br><span>'+data['date_at']+'</span>') 
+            $('#item-shift').html(' <button class="btn btn-danger close-shift"><span class="icon"><i class="fa fa-ban fa-fw"></i></span>Закрити зміну</button>')
         } else {
-            $('.checkbox-rro-order-status').html('<span style="color: red">' + data['status'] + '</span><br><span></span>')
-            $('#item-shift').html(' <button class="btn btn-success create-shift"><i class="fa fa-check fa-fw"></i>Відкрити зміну</button>')
+            $status = "Зміна закрита";
+            $('.checkbox-rro-order-status').html('<span style="color: red">' + $status + '</span><br><span>' + data['cashier_full_name'] + '</span><br><span></span>') 
+            $('#item-shift').html(' <button class="btn btn-success create-shift"><span class="icon"><i class="fa fa-check fa-fw"></span></i>Відкрити зміну</button>')
         }
     }
 
@@ -97,14 +102,9 @@ $(document).ready(function () {
     }
 
     function  htmlControlPanelOrder(data){
-        $('.shift-status').show();
-        if (data['status'] == 'OPENED') {
-            $('.checkbox-rro-order-status').html('<span style="color: green">' + data['status'] + '</span><br><span>' + data['cashier_full_name'] + '</span><br><span>'+data['date_at']+'</span>') 
-            $('#item-shift').html(' <button class="btn btn-danger close-shift"><i class="fa fa-ban fa-fw"></i>Закрити зміну</button>')
-        } else {
-            $('.checkbox-rro-order-status').html('<span style="color: red">' + data['status'] + '</span><br><span>' + data['cashier_full_name'] + '</span><br><span></span>') 
-            $('#item-shift').html(' <button class="btn btn-success create-shift"><i class="fa fa-check fa-fw"></i>Відкрити зміну</button>')
-        }
+        $('.shift-status').show(); 
+        htmlControlPanel(data)
+        
 
         if(!data['order']['return_receipt']['status']){
             $('.order-generate-return-receipt').show()
@@ -164,13 +164,15 @@ $(document).ready(function () {
             preloader(true)
             var orderId = $('#checkbox-rro-order-info-container').attr('data-order-id');
             var clientId = $('#checkbox-rro-order-info-container').attr('data-client-id');
-            var email = $('#checkbox-rro-order-info-button-create-receipt-send-email').prop('checked')
+            var email = $('#checkbox-rro-order-info-button-create-receipt-send-email').prop('checked');
+            var payments = $('#checkbox-rro-order-info-button-create-receipt-payment-type').val();
             $.ajax({
                 type: "GET", 
                 dataType: "json",
                 data: { 
                     order_id: orderId,
                     client_id: clientId,
+                    payments: payments,
                     email: email,
                     action: "orderCreateReceiptPayment"
                 },
@@ -247,5 +249,24 @@ $(document).ready(function () {
             });
         })
     }
- 
+
+    function file_get_contents( url ) {	// Reads entire file into a string
+        // 
+        // +   original by: Legaev Andrey
+        // %		note 1: This function uses XmlHttpRequest and cannot retrieve resource from different domain.
+    
+        var req = null;
+        try { req = new ActiveXObject("Msxml2.XMLHTTP"); } catch (e) {
+            try { req = new ActiveXObject("Microsoft.XMLHTTP"); } catch (e) {
+                try { req = new XMLHttpRequest(); } catch(e) {}
+            }
+        }
+        if (req == null) throw new Error('XMLHttpRequest not supported');
+    
+        req.open("GET", url, false);
+        req.send(null);
+    
+        return req.responseText;
+    }
+    
 })

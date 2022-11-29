@@ -15,7 +15,7 @@
         public function __construct($config)
         {
             $this->config = $config['checkbox_auth'];
-            $auth = $this->auth(0); //0 - тестова для розробки (тестовий сервер), 1 - тестова для розробки (промисловий сервер), 2- робоча 
+            $auth = $this->auth(1); //0 - тестова для розробки (тестовий сервер), 1 - тестова для розробки (промисловий сервер), 2- робоча 
 
             $this->login = $auth['login'];  //"test_6xuslohvw"
             $this->password = $auth['password'];           //"test_6xuslohvw"

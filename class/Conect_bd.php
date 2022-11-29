@@ -2,10 +2,10 @@
 class Conect_bd
 {
     private $HOST;
-    private $DB_NAME  ;
-    private $USERNAME  ;
-    private $PASSWORD  ;
-    private $CHARSET ;
+    private $DB_NAME;
+    private $USERNAME;
+    private $PASSWORD; 
+    private $CHARSET;
 
     private $db; 
     public function __construct($config)
