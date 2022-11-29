@@ -53,7 +53,7 @@
                         }
                     } 
                     
-                    $data['payments'][0]['type'] = 'CARD';
+                    $data['payments'][0]['type'] = $_GET['payments'];
                     $data['payments'][0]['value'] = $response['total_sum_discount'] * 100; 
 
                     if( $_GET['email'] == "true" && isset($response['email'])){
@@ -64,16 +64,16 @@
                     $json =  $checkbox->create_receipt($data);
                     
                    
-                   /* echo $json['status'];
-                    //print_r($data);
-                    exit;*/
+                     /*echo $json['status'];
+                     print_r($data);
+                    exit; */
 
-                    if($json['status'] == "CREATED"){
+                    if($json['status'] == "DONE"){
                         if($_GET['is_return']){
                             $query = "UPDATE `order_rro` SET `checkbox_return_receipt_id` = :checkbox_return_receipt_id WHERE `order_id` = :order_id ";
                             $params = [
                                 ':order_id'     =>  $order_id,
-                                ':checkbox_return_receipt_id' => $json['id'], 
+                                ':checkbox_return_receipt_id' => $json['id'],  
                             ];
     
                         }else{
