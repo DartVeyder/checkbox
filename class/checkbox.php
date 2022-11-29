@@ -10,9 +10,11 @@
 
         private $access_token = '';
 
-        public function __construct()
+        private $config;
+
+        public function __construct($config)
         {
-            
+            $this->config = $config['checkbox_auth'];
             $auth = $this->auth(0); //0 - тестова для розробки (тестовий сервер), 1 - тестова для розробки (промисловий сервер), 2- робоча 
 
             $this->login = $auth['login'];  //"test_6xuslohvw"
@@ -24,16 +26,8 @@
 
         private function auth($is_auth){
             $data = [];
-            switch ($is_auth) {
-                case 0:
-                    $data['login'] = 'test_6xuslohvw';
-                    $data['password'] = 'test_6xuslohvw';
-                    $data['cashbox_key'] = 'test739618130f98710104064abf';
-                    $data['is_dev'] = 1;
-                break;
-                
-            }
-            return $data;
+            $data = $this->config ;  
+            return $data[$is_auth];
         }
 
         //Вхід користувача (касира) за допомогою логіна та паролю та Створення Bear токена

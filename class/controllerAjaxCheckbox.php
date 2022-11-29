@@ -1,15 +1,17 @@
 <?php
+    $config = include_once('config.php'); 
     include_once('Conect_bd.php');
     include_once('checkbox.php'); 
-    $conect_db = new Conect_bd;
-    $checkbox = new Checkbox;
+    
+    $conect_db = new Conect_bd($config);
+    $checkbox = new Checkbox($config);
 
     $pdo = $conect_db->getDb();
 
     $json = [];
     switch ($_GET['action']) {
         case 'refreshStatusCashRegister': 
-            echo rroInfo();
+            echo rroInfo($config);
         break;
         case 'close_shift':
             $checkbox->disconnect();
@@ -22,7 +24,7 @@
             echo getResponse($response);
         break;
         case 'rroOrderInfo':
-            echo rroInfo();
+            echo rroInfo($config);
         break;
         case 'orderCreateReceiptPayment': 
             $response =  $checkbox->getShifts();
@@ -158,10 +160,10 @@ EOT;
         return  json_encode( $json,1);
     }
 
-    function rroInfo(){
-        $conect_db = new Conect_bd;
-        $checkbox = new Checkbox;
-
+    function rroInfo($config){
+        $conect_db = new Conect_bd($config);
+        $checkbox = new Checkbox($config);
+        
         $pdo = $conect_db->getDb();
 
         $json = [];
