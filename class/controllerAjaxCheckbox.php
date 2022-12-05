@@ -2,9 +2,11 @@
     $config = include_once('config.php'); 
     include_once('Conect_bd.php');
     include_once('checkbox.php'); 
+    include_once('modelAjaxCheckbox.php'); 
     
     $conect_db = new Conect_bd($config);
     $checkbox = new Checkbox($config);
+    $modelAjaxCheckbox = new ModelAjaxCheckbox();
 
     $pdo = $conect_db->getDb();
 
@@ -142,6 +144,20 @@ EOT;
         case 'zReport': 
             echo '<pre>';
             echo $checkbox->getReportText($_GET['z_report_id']);
+        break;
+        case 'infoOrderRro':
+            $data = [];
+            $order_id = $_GET['order_id']; 
+            $stmt = $pdo->prepare("SELECT * FROM order_rro WHERE `order_id` = ?");
+            $stmt->execute([$order_id]);
+            $response = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if( $response['checkbox_receipt_id']){
+                $response['status'] = 'success';
+            }else{
+                $response['status'] = 'failed';
+            }
+            echo json_encode( $response,1);
         break;
     }  
 

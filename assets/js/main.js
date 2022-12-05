@@ -48,8 +48,8 @@ $(document).ready(function () {
                     console.log(data);
                     rroOrderInfo()
                     createShift()
-                    file_get_contents('class/controllerAjaxCheckbox.php?action=zReport&z_report_id='+data['z_report_id'])
-                   // window.open('class/controllerAjaxCheckbox.php?action=zReport&z_report_id='+data['z_report_id'], '_blank');
+                    //file_get_contents('class/controllerAjaxCheckbox.php?action=zReport&z_report_id='+data['z_report_id'])
+                    window.open('class/controllerAjaxCheckbox.php?action=zReport&z_report_id='+data['z_report_id'], '_blank');
                 }
             });
         })
