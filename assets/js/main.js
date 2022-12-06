@@ -48,16 +48,33 @@ $(document).ready(function () {
                     console.log(data);
                     rroOrderInfo()
                     createShift()
+                    
+                    $('#z-report-modal').modal('show')
+                    zReport(data)
                     //file_get_contents('class/controllerAjaxCheckbox.php?action=zReport&z_report_id='+data['z_report_id'])
-                    window.open('class/controllerAjaxCheckbox.php?action=zReport&z_report_id='+data['z_report_id'], '_blank');
+                    //window.open('class/controllerAjaxCheckbox.php?action=zReport&z_report_id='+data['z_report_id'], '_blank');
                 }
             });
         })
     }
 
- 
+    $('.close').click(function(){
+        $('#z-report-modal').modal('hide')
+    })
+    $('.btn-zreport').click(function(){
+        $('#z-report-modal').modal('show')
+        var data = JSON.parse( $(this).attr('data-shift') );  
+        zReport(data)
+    })
 
-    $('#z-report-modal').on('show.bs.modal', function (event) {
+    function zReport(data){
+        text = file_get_contents('class/controllerAjaxCheckbox.php?action=zReport&z_report_id='+data.z_report_id)
+        $title_download = "z_report_"+ data.serial+"_"+data.closed_at;
+        $('.modal-body').html(text)
+        $('.z-report-num').html(data.serial)
+        $('.modal-body').attr('data-title',  $title_download )
+    }
+    /*$('#z-report-modal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal 
         var data = button.data('shift')  
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
@@ -69,7 +86,7 @@ $(document).ready(function () {
         modal.find('.modal-body').html(text)
         modal.find('.z-report-num').html(data.serial)
         modal.find('.modal-body').attr('data-title',  $title_download )
-      })
+      })*/
       
   
     function createShift() {

@@ -8,7 +8,3 @@ include_once('template/main.html');
 
 /*$response =  $checkbox->getShifts();
 print_r($response['results'][0]->status);*/
-
-foreach ($variable as $key => $value) {
-    # code...
-}

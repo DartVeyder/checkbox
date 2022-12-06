@@ -9,7 +9,7 @@
     $modelAjaxCheckbox = new ModelAjaxCheckbox();
 
     $pdo = $conect_db->getDb();
-
+    $data = [];
     $json = [];
     switch ($_GET['action']) {
         case 'refreshStatusCashRegister': 
@@ -18,7 +18,11 @@
         case 'close_shift':
             $checkbox->disconnect();
             $response =  $checkbox->getShifts();
-            echo getResponse($response);
+            $response = json_decode(getResponse($response),1) ;
+            $data['z_report_id'] = $response['z_report_id'];
+            $data['closed_at'] = date('d.m.Y H:i:s');
+            $data['serial'] = "";
+            echo json_encode($data,1);
         break;
         case 'create_shift':
             $response = $checkbox->connect();

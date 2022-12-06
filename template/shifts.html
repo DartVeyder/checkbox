@@ -1,29 +1,9 @@
- 
-<!-- Modal -->
-<div class="modal fade" id="z-report-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Z-Звіт №<span class="z-report-num"></span></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body text-center" id="z-report-text" data-title=''>
-
-      </div>
-      <div class="modal-footer"> 
-        <button type="button" class="btn btn-primary" id="z-report-print"  onclick="printElement('z-report-text','Title')"><i class="fa fa-print" aria-hidden="true" ></i> Роздрукувати</button>
-        <button type="button" class="btn btn-primary" id="z-report-download"  onclick="download()"><i class="fa fa-download" aria-hidden="true"></i> Завантажити</button>
-      </div>
-    </div>
-  </div>
-</div>
+<?php include_once('modal_window_z_report.html');?>
 
 <div class="card">
  
   <div class="card-body">
-  <h5 class="card-title">Зміни</h5>
+  <h2 class="card-title">Зміни</h2>
 <table class="table">
     <thead>
       <tr>
@@ -65,7 +45,7 @@
             'status' =>  $shift->status,
             'serial' => $shift->serial,
             'fiscal_number' => $shift->cash_register->fiscal_number,
-            'z_repor_id'=> $shift->z_report->id
+            'z_report_id'=> $shift->z_report->id
           ];
           $data = json_encode($data, 1);
           
@@ -78,11 +58,11 @@
                   <td> $closed_at </td>
                   <td>";
                   if($closed_at){
-                    echo " <button type='button' data-shift='$data'  class='btn btn-primary' data-toggle='modal' data-target='#z-report-modal' data-z-report-id='{$shift->z_report->id}'>
+                    echo " <button type='button' data-shift='$data'  class='btn btn-primary btn-zreport' data-toggle='modal'   data-z-report-id='{$shift->z_report->id}'>
                     Переглянути
                     </button>";
                   } 
-               echo "</td> 
+              echo "</td> 
                 </tr>";
         } 
       ?>
