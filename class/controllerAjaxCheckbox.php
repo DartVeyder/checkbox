@@ -66,11 +66,11 @@
                     $json =  $checkbox->create_receipt($data);
                     
                    
-                     /*echo $json['status'];
-                     print_r($data);
-                    exit; */
+                     //echo $json['status'];
+                   //  print_r($json);
+                    //exit; 
 
-                    if($json['status'] == "DONE"){
+                    if($json['status'] == "DONE" || $json['status'] == "CREATED"){
                         if($_GET['is_return']){
                             $query = "UPDATE `order_rro` SET `checkbox_return_receipt_id` = :checkbox_return_receipt_id WHERE `order_id` = :order_id ";
                             $params = [
@@ -158,6 +158,12 @@ EOT;
                 $response['status'] = 'failed';
             }
             echo json_encode( $response,1);
+        break;
+        case 'shifts': 
+            echo '<pre>';
+           // print_r( $checkbox->getZReports());
+            $response = $checkbox->getShifts(); 
+            
         break;
     }  
 

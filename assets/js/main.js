@@ -55,6 +55,23 @@ $(document).ready(function () {
         })
     }
 
+ 
+
+    $('#z-report-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal 
+        var data = button.data('shift')  
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this) 
+        text = file_get_contents('class/controllerAjaxCheckbox.php?action=zReport&z_report_id='+data.z_repor_id)
+        $title_download = "z_report_"+ data.serial+"_"+data.closed_at;
+          //z_report_71_2022/12/06_12:06:50.txt
+        modal.find('.modal-body').html(text)
+        modal.find('.z-report-num').html(data.serial)
+        modal.find('.modal-body').attr('data-title',  $title_download )
+      })
+      
+  
     function createShift() {
         $('.create-shift').click(function () { 
             $('#item-shift .icon').html(' <div class="spinner-border spinner-border-sm mr-1" role="status"></div></button>')
@@ -268,5 +285,52 @@ $(document).ready(function () {
     
         return req.responseText;
     }
-    
+    // z-report-text
+    /*$('#z-report-print').click(function(){
+         
+            // Store DIV contents in the variable.
+            var div = document.getElementById('z-report-text');
+
+            // Create a window object.
+            // Open the window. Its a popup window.
+            var win = window.open('', '', 'height=700,width=700');
+            
+          	// Write contents in the new window.
+            win.document.write(div.outerHTML);
+            win.document.close();
+            win.print();       // Finally, print the contents.
+       
+    })*/
+   
+
+})
+function printElement(elem, title) {
+     
+    var popup = window.open('', 'PRINT', 'height=600,width=900');
+   
+    popup.document.write('<html><head><title>' + title  + '</title><style>body {font-family: Arial;}</style>');
+    popup.document.write('</head><body >');
+    popup.document.write(document.getElementById(elem).innerHTML);
+    popup.document.write('</body></html>');
+    popup.document.close(); 
+    popup.focus(); 
+    popup.print();
+    popup.close();
+    return true;
+  }
+
+  function download( ){
+    var a = document.body.appendChild(
+        document.createElement("a")
+    );
+    var text = document.getElementById('z-report-text').innerHTML.replace('<pre>', '')  ;
+    var title = $('#z-report-text').attr('data-title');
+     console.log(title)   
+    a.download = title+".txt";
+    a.href = "data:text/text," + text;
+    a.click();
+}
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
 })

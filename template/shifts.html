@@ -1,0 +1,99 @@
+ 
+<!-- Modal -->
+<div class="modal fade" id="z-report-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Z-Звіт №<span class="z-report-num"></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center" id="z-report-text" data-title=''>
+
+      </div>
+      <div class="modal-footer"> 
+        <button type="button" class="btn btn-primary" id="z-report-print"  onclick="printElement('z-report-text','Title')"><i class="fa fa-print" aria-hidden="true" ></i> Роздрукувати</button>
+        <button type="button" class="btn btn-primary" id="z-report-download"  onclick="download()"><i class="fa fa-download" aria-hidden="true"></i> Завантажити</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+ 
+  <div class="card-body">
+  <h5 class="card-title">Зміни</h5>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Статус</th> 
+        <th scope="col">Номер зміни</th>
+        <th scope="col">Каса</th>
+        <th scope="col">Відкриття</th>
+        <th scope="col">Закриття</th>
+        <th scope="col">z-звіт</th>
+      </tr>
+    </thead>
+    <tbody>
+      <pre>
+      <?php
+       
+        $response = $checkbox->getShifts(); 
+
+        foreach ($response['results'] as  $shift) { 
+          
+          if($shift->opened_at){
+            $opened_at = date("d.m.Y H:i:s", strtotime($shift->opened_at)) ;
+          }
+          if($shift->closed_at){
+            $closed_at = date("d.m.Y H:i:s", strtotime($shift->closed_at)) ;
+          }
+          $status = [
+            "OPENED" => [
+              "title" => "Зміна відкрита",
+              "img" => "open.png"
+            ],
+            "CLOSED" => [
+              "title" => "Зміна закрита",
+              "img" => "closed.png"
+            ]
+          ];
+          $data = [
+            'opened_at' => $opened_at,
+            'closed_at' => $closed_at,
+            'status' =>  $shift->status,
+            'serial' => $shift->serial,
+            'fiscal_number' => $shift->cash_register->fiscal_number,
+            'z_repor_id'=> $shift->z_report->id
+          ];
+          $data = json_encode($data, 1);
+          
+          
+          echo "<tr>
+                  <td data-bs-toggle='tooltip' data-bs-placement='right' title='{$status[$shift->status]['title']}'><img src='assets/img/{$status[$shift->status]['img']}' width='45' ></td> 
+                  <td>$shift->serial</td>
+                  <td>{$shift->cash_register->fiscal_number}</td>
+                  <td>$opened_at</td>
+                  <td> $closed_at </td>
+                  <td>";
+                  if($closed_at){
+                    echo " <button type='button' data-shift='$data'  class='btn btn-primary' data-toggle='modal' data-target='#z-report-modal' data-z-report-id='{$shift->z_report->id}'>
+                    Переглянути
+                    </button>";
+                  } 
+               echo "</td> 
+                </tr>";
+        } 
+      ?>
+       
+        
+        
+      
+    </tbody>
+  </table>
+  </div>
+</div>
+<script>
+
+</script>
